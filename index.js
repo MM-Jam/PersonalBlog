@@ -1,8 +1,21 @@
+const history = require('connect-history-api-fallback');
+
+//引入配置
+const globalConfig = require('./config'); 
+
+const loader = require('./loader');
+
 const express = require('express');
 const app = express();
-
+app.use(history())
 app.use(express.static('./page/'));
 
-app.listen(8080,()=>{
+
+app.post('/editEveryday',loader.get('/editEveryday'));
+app.get('/queryEveryday',loader.get('/queryEveryday'));
+app.post('/editBlog',loader.get('/editBlog'));
+app.get('/queryBlog',loader.get('/queryBlog'))
+
+app.listen(globalConfig.port,()=>{
     console.log('启用服务器');
 })
