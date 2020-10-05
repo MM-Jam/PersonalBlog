@@ -1,8 +1,8 @@
 const dbUtil = require('./dbUtil');
 
-function insertBlog(ctime,utime,content,tags,views,title,success){
-    const insertSql = 'insert into blogs (`ctime`,`utime`,`content`,`tags`,`views`,`title`) values(?,?,?,?,?,?)';
-    const params = [ctime,utime,content,tags,views,title];
+function insertTag(ctime,utime,tag,success){
+    const insertSql = 'insert into tags (`ctime`,`utime`,`tag`) values(?,?,?)';
+    const params = [ctime,utime,tag];
     const connection = dbUtil.creConnection();
     connection.connect();
     connection.query(insertSql, params,function (err, res) {
@@ -15,9 +15,9 @@ function insertBlog(ctime,utime,content,tags,views,title,success){
       });
 }
 
-function queryBlogByPage(limit,page,success){
-    const querySql = 'select * from blogs order by id desc limit ?,?;';
-    const params = [limit*(page-1),+limit];
+function queryTag(tag,success){
+    const querySql = 'select * from tags where tag = ?';
+    const params = [tag];
     const connection = dbUtil.creConnection();
     connection.connect();
     connection.query(querySql, params,function (err, res) {
@@ -29,5 +29,6 @@ function queryBlogByPage(limit,page,success){
         }
       });
 }
-module.exports.insertBlog = insertBlog;
-module.exports.queryBlogByPage = queryBlogByPage;
+
+module.exports.queryTag = queryTag;
+module.exports.insertTag = insertTag;
