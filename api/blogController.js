@@ -37,6 +37,18 @@ function editBlog(req, res) {
     })
 }
 
+function addBlogViews(req,res){
+    req.on('data', function (data) {
+        const resData = JSON.parse(data.toString())['data'];
+        console.log(resData)
+        blogDao.addBlogViews(resData.newViews,resData.id,result => {
+            res.writeHead(200);
+            res.write(respUtil.respWrite('success', '添加成功', null));
+            res.end();
+        })
+    })
+}
+
 function queryTag(blogId,tag){
     tagDao.queryTag(tag,result=>{
         if(result==null || result.length==0){
@@ -67,7 +79,20 @@ function queryBlogByPage(req, res) {
     })
 }
 
+function queryBlogById(req,res){
+    blogDao.queryBlogById(req.query.id,result => {
+        // for(let i=0;i<result.length;i++){
+        //     result[i].content = result[i].content.replace(/<img[\w\W]*">/,'');
+        // }
+        res.writeHead(200);
+        res.write(respUtil.respWrite('success', '获取博客成功', result));
+        res.end();
+    })
+}
+
 path.set('/editBlog', editBlog);
 path.set('/queryBlogByPage', queryBlogByPage);
+path.set('/queryBlogById',queryBlogById);
+path.set('/addBlogViews',addBlogViews)
 
 module.exports.path = path;

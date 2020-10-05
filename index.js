@@ -14,7 +14,10 @@ app.use(express.static('./page/'));
 app.post('/editEveryday',loader.get('/editEveryday'));
 app.get('/queryEveryday',loader.get('/queryEveryday'));
 app.post('/editBlog',loader.get('/editBlog'));
-app.get('/queryBlogByPage',loader.get('/queryBlogByPage'))
+app.get('/queryBlogByPage',loader.get('/queryBlogByPage'));
+app.get('/queryBlogById',loader.get('/queryBlogById'));
+app.post('/addBlogViews',loader.get('/addBlogViews'));
+app.post('/editComment',loader.get('/editComment'));
 
 app.listen(globalConfig.port,()=>{
     console.log('启用服务器');
