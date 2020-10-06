@@ -57,9 +57,58 @@ function queryBlogById(id,success){
         else{
             success(res)
         }
+    });
+}
+
+function queryBlog(success){
+    const querySql = 'select * from blogs order by id desc;';
+    const params = [];
+    const connection = dbUtil.creConnection();
+    connection.connect();
+    connection.query(querySql, params,function (err, res) {
+        if (err){
+            console.log(err)
+        }
+        else{
+            success(res)
+        }
+    });
+}
+
+function queryBlogByViews(success){
+    const querySql = 'select * from blogs order by views desc limit 0,7;';
+    const params = [];
+    const connection = dbUtil.creConnection();
+    connection.connect();
+    connection.query(querySql, params,function (err, res) {
+        if (err){
+            console.log(err)
+        }
+        else{
+            success(res)
+        }
+    });
+}
+
+function queryArticleByKey(titleKey,success){
+    const querySql = 'select * from blogs where title like "%?%" order by id desc;';
+    const params = [titleKey];
+    const connection = dbUtil.creConnection();
+    connection.connect();
+    connection.query(querySql, params,function (err, res) {
+        if (err){
+            console.log(err)
+        }
+        else{
+            success(res)
+        }
       });
 }
+
 module.exports.insertBlog = insertBlog;
 module.exports.queryBlogByPage = queryBlogByPage;
 module.exports.queryBlogById = queryBlogById;
 module.exports.addBlogViews = addBlogViews;
+module.exports.queryBlog = queryBlog;
+module.exports.queryBlogByViews = queryBlogByViews;
+module.exports.queryArticleByKey = queryArticleByKey;

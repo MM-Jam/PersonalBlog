@@ -30,5 +30,21 @@ function queryTag(tag,success){
       });
 }
 
+function queryAllTags(success){
+    const querySql = 'select * from tags;';
+    const params = [];
+    const connection = dbUtil.creConnection();
+    connection.connect();
+    connection.query(querySql, params,function (err, res) {
+        if (err){
+            console.log(err)
+        }
+        else{
+            success(res)
+        }
+      });
+}
+
 module.exports.queryTag = queryTag;
 module.exports.insertTag = insertTag;
+module.exports.queryAllTags = queryAllTags;
